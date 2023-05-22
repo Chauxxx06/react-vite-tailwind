@@ -10,5 +10,9 @@ inicializacion de tailwinds en el proyecto npx tailwindcss init -p
 
 #### Enrutamiento en React ####
 para el uso de router se instala el paquete npm install react-router-dom
-
 para sacar imagenes de pruebas se pouede usar https://www.pexels.com/es-es/
+
+#### API ####
+
+API de consumo de las bases de datos de los productos del e-commerce
+https://fakeapi.platzi.com/en/rest/introduction
