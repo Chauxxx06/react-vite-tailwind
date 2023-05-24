@@ -1,4 +1,5 @@
 import { useRoutes, BrowserRouter } from 'react-router-dom'; // libreria para configuracion de routers
+import { ShoppingCartProvider } from '../../Context';
 import Home from '../home';
 import MyAccount from '../MyAccount';
 import MyOrders from '../MyOrders';
@@ -25,10 +26,12 @@ function App() {
   
   return (
     // el browserRouter permite hacer el routeo a traves de la funcion de AppRoutes, que tiene programado el hook useRoutes
-    <BrowserRouter>
-      <AppRoutes />
-      <Navbar />
+    <ShoppingCartProvider>
+      <BrowserRouter>
+        <AppRoutes />
+        <Navbar />
     </BrowserRouter>
+    </ShoppingCartProvider>  
   )
 }
 
