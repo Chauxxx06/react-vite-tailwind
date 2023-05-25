@@ -16,3 +16,6 @@ para sacar imagenes de pruebas se pouede usar https://www.pexels.com/es-es/
 
 API de consumo de las bases de datos de los productos del e-commerce
 https://fakeapi.platzi.com/en/rest/introduction
+
+para usar iconos bonitos usar la libreria de heroicons
+https://heroicons.com/
