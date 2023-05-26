@@ -6,7 +6,7 @@ import './styles.css'
 
 const ProductDetail = () => {
     const { isProductDetailOpen, closeProductDetail, productToShow } = React.useContext(ShoppingCartContext);
-    console.log(productToShow)
+    //console.log(productToShow)
     return(
         <aside className={`${isProductDetailOpen ? 'flex' : 'hidden'} product-detail flex-col fixed right-0 border boder-black rounded-lg bg-white`}>
             <div className="flex justify-between items-center">
@@ -17,7 +17,7 @@ const ProductDetail = () => {
             </div>
             <figure className="px-6">
                 <img className="w-full h-full rounded-lg" 
-                src={productToShow.images[0]} 
+                src={productToShow.images} 
                 alt={productToShow.title} 
                 />
             </figure>

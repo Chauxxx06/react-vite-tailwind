@@ -1,17 +1,49 @@
 import React from "react";
 import { ShoppingCartContext } from '../../Context'
-import { PlusIcon } from '@heroicons/react/24/solid'
+import { PlusIcon, CheckIcon } from '@heroicons/react/24/solid'
 
 const Card = (data) => {
   const { count, 
           setCount, 
           openProductDetail,
-          setProductToShow 
+          setProductToShow,
+          cartProducts,
+          setCartProducts,
+          openCheckoutSideMenu 
   } = React.useContext(ShoppingCartContext);
   // usa el context de ProductToShow para setear la inforamcion y que quede en productToShow
   const showProduct = (productDetail) => {
     openProductDetail()
     setProductToShow(productDetail)
+  }
+
+  const addProductsToCart = (event, productData) => {
+    event.stopPropagation()
+    setCount(count + 1)
+    setCartProducts([... cartProducts, productData])
+    openCheckoutSideMenu()
+  }
+
+  const renderIcon = (id) => {
+    const isInCart = cartProducts.filter(product => product.id === id).length > 0
+    if (!isInCart) {
+      return(
+        <div className="absolute top-0 right-0 flex justify-center items-center bg-white w-6 h-6 rounded-full m-2 p-1"
+            onClick={(event) => addProductsToCart(event, data.data) }
+          >
+            <PlusIcon className="w-6 h-6 text-black"/>
+        </div>
+      );
+    } else {
+      return(
+        <div className="absolute top-0 right-0 flex justify-center items-center bg-white w-6 h-6 rounded-full m-2 p-1"
+            onClick={(event) => addProductsToCart(event, data.data) }
+          >
+            <CheckIcon className="w-6 h-6  text-lime-800"/>
+        </div>
+      );
+    }
+
   }
 
   return (
@@ -28,11 +60,7 @@ const Card = (data) => {
           alt="headphones"
           className="w-full h-full object-cover rounded-lg"
         />
-        <div className="absolute top-0 right-0 flex justify-center items-center bg-white w-6 h-6 rounded-full m-2 p-1"
-          onClick={() => setCount(count + 1) }
-        >
-          <PlusIcon className="w-6 h-6 text-black"/>
-        </div>
+        {renderIcon(data.data.id)}
       </figure>
       <p className="flex justify-between">
         <span className="text-sm font-light">{data.data.title}</span>
