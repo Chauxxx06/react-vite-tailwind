@@ -1,28 +1,50 @@
-import { useState, useEffect } from 'react';
+import React from "react";
 import Layout from "../../components/layout";
 import Card from "../../components/Card";
 import ProductDetail from '../../components/ProductDetails';
+import { ShoppingCartContext } from '../../Context/index'
 
 function Home() {
-  const [items, setItems] = useState(null) // el state es para almacenar la informacion que viene de la API
-                                          // el setItem guarda la informacion que viene de la API y it em es la variable que tiene la informacion
-  useEffect(() => {
-    //fetch('https://young-sands-07814.herokuapp.com/api/products?limit=30&offset=0')
-    fetch('https://api.escuelajs.co/api/v1/products')
-    .then(response => response.json())
-    .then(data => setItems(data))
-  },[]); // se programa el useEffect para el llamado de la API, ya que la consulta puede tardar y se requiere que sea asincrono
-        // Recordarf que el useEffect se ejecuta bajo ciertas condiciones de render y no todas las veces, es util para renderizar lo necesario y no tardar la nevgacion de la pagina
+  const { items,
+          searchByTitle,
+          filteredItems,
+          setSearchByTitle } = React.useContext(ShoppingCartContext);
+  
+  const renderView = (items, filteredItems) => {
+    if(searchByTitle?.length > 0) {
+      return(
+          <div className="grid gap-4 grid-cols-4 w-full max-w-screen-lg">
+            {
+              filteredItems?.map( item => <Card key={item.id} data={item}/> )
+            }
+        </div>
+      )
+    } else {
+      return(
+        <div className="grid gap-4 grid-cols-4 w-full max-w-screen-lg">
+            {
+              items?.map( item => <Card key={item.id} data={item}/> )
+            }
+        </div>
+      )
+    }
+  }
 
     return (
       <>
         <Layout>
-        Home
-          <div className="grid gap-4 grid-cols-4 w-full max-w-screen-lg">
-            {
-              items?.map( item => <Card key={item.id} data={item}/> )
-            }
+          <div className="flex items-center justify-center relative w-80">
+            <h1 className="font-medium text-xl mb-4">Exclusive Products</h1>
           </div>
+          <input 
+            type="text" 
+            placeholder="Search your product!" 
+            className="rounded-lg border-black w-80 p-4 mb-6"
+            onChange={(event) => setSearchByTitle(event.target.value)}
+            />
+          {
+            renderView(items, filteredItems)
+          }
           <ProductDetail />
         </Layout>
       </>
