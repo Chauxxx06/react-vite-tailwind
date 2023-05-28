@@ -44,21 +44,7 @@ const ShoppingCartProvider = ({children}) => {
         if (searchByTitle) setFilteredItems(filteredItemsByTitle(items, searchByTitle))
       }, [items, searchByTitle])
 
-    const [category, setCategory] = useState(null)
     
-    const filteredByCategory = (items, category) => {
-        if(category){
-          return items.filter(item => item.category.name.toLowerCase() === category);
-        } else {
-          return items;
-        }
-      }
-    
-    useEffect(() => {
-        const currentPath = window.location.pathname;
-        setCategory(currentPath.substring(currentPath.lastIndexOf('/') + 1));
-        console.log(category)
-      },[category]);
 
     return (
         <ShoppingCartContext.Provider
@@ -82,8 +68,7 @@ const ShoppingCartProvider = ({children}) => {
                 setItems,
                 searchByTitle,
                 setSearchByTitle,
-                filteredItems,
-                filteredByCategory
+                filteredItems
             }}
         >
             {children}

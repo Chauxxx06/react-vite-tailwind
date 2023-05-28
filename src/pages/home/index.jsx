@@ -1,4 +1,5 @@
 import React from "react";
+import { useEffect, useState } from 'react';
 import Layout from "../../components/layout";
 import Card from "../../components/Card";
 import ProductDetail from '../../components/ProductDetails';
@@ -12,23 +13,53 @@ function Home() {
   
   const renderView = (items, filteredItems) => {
     if(searchByTitle?.length > 0) {
-      return(
+      if (category.length <= 0) {
+        return(
           <div className="grid gap-4 grid-cols-4 w-full max-w-screen-lg">
             {
               filteredItems?.map( item => <Card key={item.id} data={item}/> )
             }
         </div>
-      )
-    } else {
-      return(
-        <div className="grid gap-4 grid-cols-4 w-full max-w-screen-lg">
+    )
+      } else {
+        return(
+          <div className="grid gap-4 grid-cols-4 w-full max-w-screen-lg">
             {
-              items?.map( item => <Card key={item.id} data={item}/> )
+
+              filteredItems?.filter(item => item.category.name.toLowerCase() === category).map( item => <Card key={item.id} data={item}/> )
             }
         </div>
-      )
+        )
+      }
+
+    } else {
+      if (category.length <= 0) {
+        return(
+          <div className="grid gap-4 grid-cols-4 w-full max-w-screen-lg">
+              {
+                items?.map( item => <Card key={item.id} data={item}/> )
+              }
+          </div>
+        )
+      } else {
+        return(
+          <div className="grid gap-4 grid-cols-4 w-full max-w-screen-lg">
+              {
+                items?.filter(item => item.category.name.toLowerCase() === category).map( item => <Card key={item.id} data={item}/> )
+              }
+          </div>
+        )}
     }
   }
+
+  const [category, setCategory] = useState(null)   
+    
+  useEffect(() => {
+      const currentPath = window.location.pathname;
+      setCategory(currentPath.substring(currentPath.lastIndexOf('/') + 1));
+      //console.log(category)
+      //filteredByCategory(items, category)
+    },[window.location.pathname]);
 
     return (
       <>
